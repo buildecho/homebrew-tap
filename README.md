@@ -41,16 +41,42 @@ Downloads require an Echo Libraries key, and the formula is available for macOS 
 4. Confirm the installation:
 
    ```bash
+   which go
    go version
    ```
 
-   The output shows the installed release, for example `go1.27.2`.
+   The output shows the Homebrew path, for example `/opt/homebrew/bin/go`, and the installed release, for example `go1.27.2`.
 
-5. Point Go at Echo's module proxy so your builds pick up Echo's patched modules:
+### Install through a private artifact repository
+
+If your organization mirrors Echo Go through a private artifact repository, Homebrew can download the toolchain through it, using your `~/.netrc` entry for that repository.
+
+1. Set the repository URL, and add the same line to your shell profile so upgrades use it too:
 
    ```bash
-   go env -w GOPROXY=https://golang.echohq.com
+   export HOMEBREW_ECHO_GO_MIRROR=https://<your-artifactory-url>/artifactory/echo-go
    ```
+
+2. Install the toolchain with its full name:
+
+   ```bash
+   brew install buildecho/tap/go
+   ```
+
+3. Point Go at the repository:
+
+   ```bash
+   go env -w GOPROXY=https://<your-artifactory-url>/artifactory/api/go/echo-go
+   ```
+
+4. Confirm the installation:
+
+   ```bash
+   which go
+   go version
+   ```
+
+   The output shows the Homebrew path, for example `/opt/homebrew/bin/go`, and the installed release, for example `go1.27.2`.
 
 ### Upgrade
 
